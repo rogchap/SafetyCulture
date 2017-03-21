@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+const argv = require('yargs')
+  .usage('Usage: $0 -s seconds')
+  .default('s', 30 * 60)
+  .demandOption(['s'])
+  .coerce('s', (value) => {
+    const num = parseInt(value, 10);
+    if (isNaN(num)) throw new Error('Invalid seconds');
+    return num;
+  })
+  .argv;
+
+require('../index')(argv.s);
